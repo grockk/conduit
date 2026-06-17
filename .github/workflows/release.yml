@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -27,6 +28,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
           makeLatest: true
+          skipIfReleaseExists: false
+          allowUpdates: true
 
   build-android:
     name: Build Android
@@ -109,7 +112,7 @@ jobs:
 
   build-ios:
     name: Build iOS
-    runs-on: macos-latest
+    runs-on: macos-26
     needs: generate-release-notes
     permissions:
       contents: write
@@ -139,7 +142,7 @@ jobs:
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: '26.5'
 
         #5 Cache CocoaPods
       - name: Cache CocoaPods
