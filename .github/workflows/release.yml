@@ -27,6 +27,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
           makeLatest: true
+          skipIfReleaseExists: false
+          allowUpdates: true
 
   build-android:
     name: Build Android
